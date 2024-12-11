@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI in Soccer: Applications, Ethics, and Examples</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script>
+        document.addEventListener('scroll', function() {
+            var scrollTop = document.documentElement.scrollTop;
+            var scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var progress = (scrollTop / scrollHeight) * 100;
+            document.getElementById('readingProgressBar').style.width = progress + '%';
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const text = document.querySelector('main').innerText;
+            const words = text.split(/\s+/).length;
+            const wordsPerMinute = 200; // Average reading speed
+            const readingTime = Math.ceil(words / wordsPerMinute);
+            document.getElementById('readTime').innerText = `${readingTime} minute read`;
+        });
+    </script>
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background: url('assets/soccer-pitch.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header-section h1 {
+            font-family: 'Playfair Display', serif;
+            margin: 0;
+            font-size: 2.5em;
+            color: #138b17;
+        }
+
+        .header-section p.author {
+            font-family: 'Roboto', sans-serif;
+            margin: 5px 0 0;
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: #138b17;
+            margin-bottom: 10px;
+        }
+
+        section {
+            margin-bottom: 20px;
+        }
+
+        img, video {
+            display: block;
+            max-width: 100%;
+            margin: 10px 0;
+        }
+
+        footer {
+            margin-top: 20px;
+            padding: 10px;
+            text-align: center;
+            background: #333;
+            color: white;
+            font-size: 0.9em;
+        }
+
+        .references-section {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #ddd;
+        }
+    
+        .references-section h2 {
+            font-family: 'Playfair Display', serif;
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+    
+        .reference-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+    
+        .reference-item {
+            margin-bottom: 15px;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+    
+        .reference-item a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+    
+        .reference-item a:hover {
+            text-decoration: underline;
+        }
+    
+        .reference-item span {
+            font-style: italic;
+        }
+
+        .references {
+            margin-top: 30px;
+            border-top: 2px solid #ddd;
+            padding-top: 10px;
+        }
+
+        .references ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .references li {
+            margin-bottom: 5px;
+        }
+
+        .reference-link {
+            color: #266428;
+            text-decoration: none;
+        }
+
+        .reference-link:hover {
+            text-decoration: underline;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            color: #4CAF50;
+            text-decoration: underline;
+        }
+
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 300px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -150px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .center-image {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .reading-progress-container {
+            width: 100%;
+            height: 5px;
+            background: #f3f3f3;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        
+        .reading-progress-bar {
+            height: 5px;
+            background: #4CAF50;
+            width: 0%;
+        }
+
+        .read-time {
+            font-family: 'Roboto', sans-serif;
+            margin: 5px 0 0;
+            font-size: 1em;
+            color: #555;
+        }
+
+        .table-of-contents {
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        
+        .table-of-contents h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5em;
+            color: #138b17;
+            margin-bottom: 10px;
+        }
+        
+        .table-of-contents ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .table-of-contents li {
+            margin: 5px 0;
+        }
+        
+        .table-of-contents a {
+            text-decoration: none;
+            color: #138b17;
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        .table-of-contents a:hover {
+            text-decoration: underline;
+        }
+
+        /* Adjust the spacing for the <pre> and <code> blocks */
+        pre {
+            margin: 10px 0; /* Reduce vertical margin */
+            padding: 10px; /* Reduce inner padding */
+            border-radius: 5px; /* Optional: Adjust rounded corners */
+            overflow-x: auto; /* Ensure horizontal scrolling for long lines */
+        }
+
+        code {
+            padding: 0; /* Remove padding inside code block */
+            margin: 0; /* Remove margin inside code block */
+            font-family: 'Courier New', Courier, monospace; /* Ensure monospaced font */
+            font-size: 0.9em; /* Adjust font size if needed */
+        }
+
+        /* Optional: Adjust the container size for Prism.js */
+        .language-python {
+            white-space: pre-wrap; /* Wrap long lines if necessary */
+        }
+    </style>
+</head>
+
+<body>
+
+<main>
+    <div class="header-section">
+        <h1>AI in Soccer: Applications, Ethics, and Examples</h1>
+        <p class="author">Vamsi Deeduvanu</p>
+        <p class="read-time" id="readTime"></p>
+    </div>
+
+    <div class="reading-progress-container">
+        <div class="reading-progress-bar" id="readingProgressBar"></div>
+    </div>
+
+    <div class="table-of-contents">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#introduction">Introduction</a></li>
+            <li><a href="#applications">Applications of AI in Soccer</a></li>
+            <li><a href="#ethics">Ethics of AI in Soccer</a></li>
+            <li><a href="#example">Example: Player Keypoint Detection Using Roboflow</a></li>
+            <li><a href="#conclusion">Conclusion</a></li>
+        </ul>
+    </div>
+
+    <section id="introduction">
+        <h2>Introduction</h2>
+        <p>Soccer (a.k.a <i>football</i> for my non-American readers) is played and
+        loved by billions of people across the globe. Over the years, its
+        evolution has been shaped by innovation--first through tactics on the
+        pitch and now by cutting-edge technology like AI (Artificial
+        Intelligence).  AI, a topic once heavily discouraged by the computing
+        field, is now driving development and innovative solutions across
+        manufacturing, health care, banking, and entertainment. The sports
+        domain, including soccer, has been no exception.
+        </p>
+
+        <p>The influence of AI is seen at all levels of soccer. Professional
+        clubs leverage advanced algorithms to scout talent, predict match
+        outcomes, and develop game-winning tactics. Meanwhile, grassroots teams
+        are beginning to use AI-powered tools for performance evaluation and
+        training optimization. Even fans interact with AI when enjoying
+        predictive match analytics or immersive augmented reality experiences
+        during games. However, this transformative power is not without its
+        challenges. Ethical concerns about data privacy, biases in AI models,
+        and unequal access to technology have sparked crucial conversations. How
+        do we ensure AI enhances soccer without compromising fairness or human
+        values?
+        </p>
+
+        <p>In this article, we will take a deep dive into the intersection of AI
+        and soccer by exploring its applications in the sport and understanding
+        the ethical considerations surrounding its implementation. We will
+        conclude the article with an end-to-end tutorial on creating a player
+        detection model. Through this exploration, we can better understand how
+        to harness AI's potential responsibly for the world's most beloved
+        sport.
+        </p>
+
+    </section>
+    
+    <section id="applications">
+        <h2>Applications of AI in Soccer</h2>
+        <h3>1. Player Performance Analysis</h3>
+        <p>
+            In soccer, match preparation is the process of analyzing a team's
+            past games and developing strategies for upcoming games.
+            Traditionally, this required hours of manual video review and
+            deliberations by multiple coaches and analysts. However, the advent
+            of AI has revolutionized this space, making preparation faster, more
+            precise, and highly data-driven. One groundbreaking application is
+            analyzing and clipping game footage using computer vision. A notable
+            example is the work of Pascal Bauer and Gabriel Anzer. In their
+            article [<a href="#ref2">1</a>], they introduce a machine-learning
+            approach to detecting counter-pressing situations from soccer match
+            footage.
+        </p>
+        <figure style="text-align: center;">
+            <img src="assets/counterpressing.gif" alt="Counter-pressing in soccer" style="width: 500px; height: 300px;" class="center-image">
+            <figcaption>Counter-pressing in soccer. Note how one team loses the ball, but wins the ball back immediately to create a scoring opportunity.
+            [<a href="#ref1">2</a>]
+            </figcaption>
+        </figure>
+        
+        <p>
+            A counter-pressing situation is one of many complex tactical phases
+            in soccer where a team presses against the ball immediately after
+            losing possession [<a href="#ref1">2</a>]. While counter-pressing is viewed as a defensive
+            action, it also provides attacking benefits. Balls recovered through
+            counter-pressing are typically higher up the pitch, and the opponent
+            is usually unbalanced as they transition to attack. Bauer and
+            Anzer's machine-learning model is capable of automatically detecting
+            these situations by identifying key moments and extracting short
+            clips like the one above. This innovation, in a complete
+            application, can save analysts countless hours of manual work,
+            enabling teams to focus on refining strategies based on the
+            extracted clips rather than sifting through entire matches
+            themselves. Similar AI tools can detect other tactical phases,
+            generate detailed heatmaps, and identify passing patterns and
+            defensive setups.
+        </p>
+
+        <p>
+            Another significant contribution of AI in match preparation is
+            predictive analytics, ushered in by the latest research in
+            generative AI. An article published by DeepMind, in collaboration
+            with Liverpool FC [<a href="#ref9">3</a>], presents the use of
+            generative models such as Graph Neural Networks (GNNs) and
+            Variational Recurrent Neural Networks (VRNNs) for predicting the
+            trajectory of players in a sports team. These models are used for
+            counterfactual analysisthe study of what could have been, i.e.,
+            analyzing how a situation would change if a data point was changed.
+            In soccer tactics, counterfactual analysis can be leveraged to study
+            how individual player movements and actions affect the positioning
+            and status of opponent players. Generative models trained on large
+            amounts of data can provide an accurate representation of how the
+            game would be affected by changing player actions, enabling coaches
+            to design new tactics and fine-tune individual player instructions.
+        </p>
+
+        <figure style="text-align: center;">
+            <img src="assets/counterfactual.png" alt="Counter-pressing in soccer" style="width: 500px; height: auto;" class="center-image">
+            <figcaption>Generative AI in action [<a href="#ref10">4</a>]. The blue
+            path in the leftmost image represents the ground truth (actual)
+            trajectory of a player. The other images represent the most likely
+            trajectories for the player, as predicted by the generative model.
+            </figcaption>
+        </figure>
+
+        <h3>2. Health and Fitness</h3>
+        <p>
+            Maintaining peak physical condition is critical for soccer players,
+            as the game demands a fine balance of strength, endurance, and
+            agility. This necessity is exemplified by the fact that athletes at
+            the highest levels are playing more games per year than ever before.
+            AI has emerged as a game-changer, providing tools to optimize
+            training regimens, monitor health metrics, and prevent injuries.
+        </p>
+
+        <p>
+            One prominent application is AI-driven recommender systems. These
+            systems analyze large datasets, including workout histories, dietary
+            habits, and biometric information, to create personalized training
+            and nutrition plans. For example, AI-powered platforms suggest
+            exercise routines tailored to individual needs, maximizing
+            performance while minimizing the risk of overtraining. Recommender
+            systems are also used for rehabilitation, suggesting exercises and
+            schedules that speed up recovery based on historical injury data
+            [<a href="#ref4">5</a>]. Such advancements not only enhance player
+            performance but also prolong their careers by minimizing injury
+            risks.
+        </p>
+
+        <p>
+            Another key innovation is real-time health monitoring using
+            wearables. Devices equipped with AI algorithms track metrics like
+            heart rate, lactic acid levels, and oxygen consumption. By analyzing
+            this data, AI systems can detect early signs of fatigue or potential
+            injuries. For instance, platforms like Zone7 [<a href="#ref11">6</a>] have helped
+            professional teams reduce injuries by identifying subtle patterns in
+            training loads that humans might overlook. By identifying high-risk
+            periods or activities, coaches can implement preventive measures,
+            ensuring players stay fit throughout demanding seasons. This
+            approach is particularly valuable in mitigating long-term health
+            issues caused by overuse injuries.
+        </p>
+
+        <figure style="text-align: center;">
+            <img src="assets/vest.png" alt="Counter-pressing in soccer" style="width: 400px; height: auto" class="center-image">
+            <figcaption>GPS vests Players often wear vests with GPS trackers
+            that provide information about a player's speed, distance covered,
+            acceleration, and physical condition. These vests are connected to
+            applications, allowing for easy access and visualization of the
+            data [<a href="#ref3">7</a>].
+            </figcaption>
+        </figure>
+
+        <h3>3. Player Recruitment</h3>
+        <p>
+            Player recruitment is a cornerstone of success in soccer, however,
+            identifying talent that aligns with a team's tactical and cultural
+            needs has always been a complex and resource-intensive process. In
+            fact, top soccer teams often spend millions (even billions) of
+            dollars on scouting and recruiting players. With the advent of AI,
+            this process is becoming faster, more efficient, and data-driven,
+            offering significant advantages to clubs at all levels.
+        </p>
+
+        <p>
+            One of the most innovative applications of AI in soccer is Scout
+            Advisor, an application designed to simplify the player recruitment
+            process, developed by IBM and Sevilla FC. Top soccer teams, like
+            Sevilla FC, often possess hundreds of thousands of scout reports for
+            players worldwide, making it difficult to find players with the
+            right profile for the team. Scout Advisor is connected to a database
+            of more than 200,000 player reports and allows team managers to
+            search for athletes using natural language queries [<a href="#ref5">8</a>].
+            This means coaches can input specific traits, such as "a
+            right-footed defensive midfielder with high interception rates and
+            long passing accuracy," and receive a curated list of players
+            matching those criteria.
+        </p>
+
+        <figure style="text-align: center;">
+            <img src="assets/scoutadvisor.png" alt="Scout Advisor" style="width: 500px; height: auto;" class="center-image">
+            <figcaption>Scout Advisor user interface [<a href="#ref5">8</a>]. 'Extremo
+            regeateador' translates to 'talented winger in English. Using
+            information-rich queries like, “a talented winger is capable of
+            taking on defenders with dribbling to create space and penetrate the
+            opposition's defense” can provide better results.
+            </figcaption>
+        </figure>
+
+        <p>
+            Despite its sophistication, the application doesn't replace human
+            judgment. Experts still need to scout and evaluate payers suggested
+            by the tool to ensure a good fit with the team's strategy and
+            culture. This example highlighted how AI can simplify complex and
+            time-consuming tasks while maintaining a collaborative role
+            alongside human decision-makers. By combining AI-driven insights
+            with human intuition, player recruitment is transforming into a more
+            precise and equitable process, shaping the future of talent
+            discovery in soccer.
+        </p>
+    </section>
+    
+    <section id="ethics">
+        <h2>Ethics of AI in Soccer</h2>
+        <p>
+            The integration of AI with soccer has brought numerous benefits to
+            the sport. However, it also raises important ethical concerns that
+            must be addressed to ensure fair, transparent, and equitable use.
+            Alberto Carrio Sampedro's paper, The Case of AI in Sport: Some
+            Ethical Concerns at Play, outlines key challenges and proposes a
+            framework to navigate them responsibly [<a href="#ref8">9</a>].
+        </p>
+
+        <p>
+            One pressing issue with AI in sports is data privacy and autonomy.
+            AI applications often require access to sensitive data. For example,
+            the recommender systems for health and fitness and injury predictive
+            models, as discussed earlier, need information about an athlete's
+            health status, injury history, vitals, and real-time location.
+            Without stringent data protection measures, athletes risk having
+            their privacy compromised. Another concern is bias and inequality in
+            AI systems. Sampdero highlights that sports models are often trained
+            on datasets that may not represent diverse groups. Most publicly
+            available soccer data comes from men's games. For example, when
+            models trained on men's data are used for women athletes, the
+            predictions will be severely biased, perpetuating inequality in the
+            sport.
+        </p>
+
+        <p>
+            Bias and privacy are just two of the many ethical issues developers
+            need to consider when creating AI systems for soccer. To assist
+            developers in tackling this problem, Sampdero presents a framework
+            for building sports AI systems that emphasize the following ethical
+            principles:
+        </p>
+        <ul>
+            <li><strong>Autonomy:</strong> AI should enhance decision-making,
+            not replace it. Human oversight should be maintained in such
+            systems.</li>
+            <li><strong>Nonmaleficence:</strong> AI systems must not cause harm
+            to athletes in any manner.</li>
+            <li><strong>Beneficence:</strong> AI should promote the well-being
+            of athletes, not take advantage of them.</li>
+            <li><strong>Fairness:</strong> AI tools must ensure equitable access
+            and outcomes, avoiding biases that could cause disadvantages to
+            certain groups.</li>
+            <li><strong>Transparency and Accountability:</strong> Developers
+            should be transparent about their systems and how AI is used, and be
+            accountable for its decisions and errors.</li>
+        </ul>
+
+        <p>
+            Sampedro's insights illustrate the dual-edged nature of AI in
+            soccer: while it offers powerful tools to revolutionize the game, it
+            must be deployed ethically to protect players, preserve the spirit
+            of competition, and uphold human rights. Adhering to these
+            principles ensures that AI serves as a tool for progress without
+            compromising the values central to the sport.
+        </p>
+    </section>
+    
+    <section id="example">
+        <h2>Example: Player Keypoint Detection Using Roboflow</h2>
+
+        <p>
+            So far, we've explored how AI is transforming soccer, focusing on
+            its applications at a high level. In this section of the article, we
+            will dive into a hands-on example of building an AI system using
+            Roboflow, a powerful platform for developing computer vision
+            applications.
+        </p>
+        
+        <p>
+            In earlier sections, we discussed how computer vision can aid match
+            preparation. Building on that, this tutorial will walk you through
+            creating an AI system capable of detecting players on
+            the pitch by leveraging key points. This example emphasizes the
+            practical implementation of concepts discussed so far, offering a
+            deeper understanding of how AI can be applied in real-world
+            scenarios. For those with programming experience, the tutorial
+            provides Python code to follow step-by-step. If you're not familiar
+            with coding, don't worry—key insights are presented clearly, and the
+            accompanying visuals will guide you through the core ideas.
+            Technical concepts are simplified where necessary to ensure
+            accessibility for all readers.
+        </p>
+
+        <p>
+            Most of the code snippets and examples in this tutorial have been
+            inspired by this excellent tutorial by Roboflow on
+            <a href="https://www.youtube.com/watch?v=aBVGKoNZQUw"
+            target="_blank">football AI</a>. If you're interested for a more
+            in-depth tutorial, I highly recommend checking it out.
+        </p>
+
+        <h3>Camera Calibration Background</h3>
+        
+        <p>
+            Camera calibration is a critical process for ensuring the accuracy
+            of vision-based AI systems used to analyze sports. It enables the
+            mapping of movements captured in video frames to their real-world
+            positions on the field. This capability becomes especially valuable
+            in scenarios where GPS data is unavailable, such as in grassroots or
+            lower-division soccer matches. To achieve precise camera
+            calibration, we will use two fundamental computer vision techniques:
+            <b>keypoint detection</b> and <b>homography</b>.
+        </p>
+
+        <p>
+            Keypoint detection is a computer vision task designed to identify
+            the location of objects and their key points within a given area.
+            This technique has a wide range of applications, including pose
+            estimation, object tracking, facial analysis, and augmented reality.
+            For example, keypoint detection can estimate a person's pose from a
+            single image by identifying specific joints or body parts.
+        </p>
+        <figure style="text-align: center;">
+            <img src="assets/keypoint-detection.png" alt="Keypoint Detection" style="width: 350px; height: auto;" class="center-image">
+            <figcaption>Keypoint detection in action. The model identifies key
+            points on the human body, such as the nose, eyes, shoulders, elbows,
+            and wrists. These points can be used to estimate the pose of the
+            person in the image [<a href="#ref6">10</a>].</figcaption>
+        </figure>
+
+        <p>
+            A homography is a projective transformation between two planes, or a
+            mapping between two projections of an image on a plane. This is
+            particularly useful in aligning images captured from different
+            perspectives of the same scene. For example, consider two views of a
+            book lying on a table. 
+        </p>
+        <figure style="text-align: center;">
+            <img src="assets/homography-example.jpg" alt="Homography" style="width: 500px; height: auto;" class="center-image">
+            <figcaption>Two perspectives of the same scene [<a href="#ref7">11</a>].</figcaption>
+        </figure>
+
+        <p>
+            We see four points on each image in four different colors--red,
+            green, yellow, and orange. These points are the same points on the
+            top of the book. A homography can translate a point in one image to
+            the same point in the second image. This transformation is crucial
+            in calibrating cameras to ensure accurate spatial understanding and
+            alignment in sports analysis.
+        </p>
+
+        <h3>Keypoint Detection</h3>
+
+        <p>
+            A soccer pitch has numerous key points, such as the goal line,
+            penalty spot, penalty box, center line, and corners. For this
+            tutorial, we'll use a pre-trained model. If you plan to train your
+            own, keep in mind that homography requires at least four key points
+            in the frame. Choose points that remain visible even when the camera
+            closely follows the action. The model we'll use is trained to detect
+            the following key points:
+        </p>
+        <figure style="text-align: center;">
+            <img src="assets/soccer-pitch-key-points.png" alt="Keypoints" style="width: 500px; height: auto;" class="center-image">
+            <figcaption>Key points on a soccer pitch.</figcaption>
+        </figure>
+
+        <p>
+            To load the trained keypoint detection model, install the following packages:
+        </p>
+        <pre><code class="language-shell">pip install inference supervision</code></pre>
+
+        <p>
+            Then, you can load the custom <a
+            href="https://universe.roboflow.com/roboflow-jvuqo/football-field-detection-f07vi/dataset/14?ref=blog.roboflow.com"
+            target="_blank"><code >football-field-detection-f07vi/14</code></a>
+            model and run it on a single image or video frame using the following
+            code. We also filter out key points with a low confidence as they
+            are likely to be inaccurate.
+        </p>
+        <pre><code class="language-python">import supervision as sv
+from inference import get_model
+
+model = get_model(
+    model_id="football-field-detection-f07vi/14", 
+    api_key=&ltROBOFLOW_API_KEY&gt
+)
+
+image = cv2.imread(<SOURCE_IMAGE_PATH>)
+result = model.infer(image, confidence=0.3)[0]
+
+keypoints = sv.KeyPoints.from_inference(result)
+
+filter = keypoints.confidence > 0.5
+keypoints.xy = keypoints.xy[filter][np.newaxis]
+keypoints.confidence = keypoints.confidence[filter][np.newaxis]
+
+vertex_annotator = sv.VertexAnnotator(radius=12)
+annotated_image = vertex_annotator.annotate(image.copy(), keypoints)</code></pre>
+
+    <figure style="text-align: center;">
+        <img src="assets/detected-keypoints.png" alt="Keypoint Detection Result" style="width: 650px; height: auto;" class="center-image">
+        <figcaption>Keypoint detection result on a soccer pitch.</figcaption>
+    </figure>
+
+    <h3>Applying Homography</h3>
+
+    <p>
+        Once we have the key points detected, we can apply homography to
+        transform the image and align it with a reference frame. Since the number
+        of detected key points changes as the camera moves, we use the function
+        <code>cv2.findHomography</code> to calculate the homography matrix.
+        The following <code>ViewTransformer</code> class allows us to reuse this matrix
+        for multiple input points.
+    </p>
+
+    <pre><code class="language-python">import cv2
+import numpy as np
+
+class ViewTransformer:
+    def __init__(self, source: np.ndarray, target: np.ndarray) -> None:
+        if source.shape != target.shape:
+            raise ValueError(
+                "Source and target must have the same shape.")
+        if source.shape[1] != 2:
+            raise ValueError(
+                "Source and target points must be 2D coordinates.")
+
+        source = source.astype(np.float32)
+        target = target.astype(np.float32)
+
+        self.m, _ = cv2.findHomography(source, target)
+        if self.m is None:
+            raise ValueError(
+                "Homography matrix could not be calculated.")
+
+    def transform_points(self, points: np.ndarray) -> np.ndarray:
+        if points.size == 0:
+            return points
+
+        if points.shape[1] != 2:
+            raise ValueError("Points must be 2D coordinates.")
+
+        points = points.reshape(-1, 1, 2).astype(np.float32)
+        points = cv2.perspectiveTransform(points, self.m)
+        return points.reshape(-1, 2).astype(np.float32)</code></pre>
+
+        <h3>Integrating Player Detections</h3>
+
+        <p>
+            Before we integrate player detections with our
+            camera calibration, we need to detect these objects in the frame.
+            For this purpose, we will use an object detection model trained to
+            detect players (and referees). The following code snippet loads the
+            model and runs it on a single image or video frame.
+        </p>
+
+        <pre><code class="language-python">import supervision as sv
+from inference import get_model
+
+model = get_model(
+    model_id="football-players-detection-3zvbc/10", 
+    api_key=&ltROBOFLOW_API_KEY&gt
+)
+
+result = model.infer(frame, confidence=0.3)[0]
+
+detections = sv.Detections.from_inference(result)
+
+ellipse_annotator = sv.EllipseAnnotator(thickness=2)
+frame = ellipse_annotator.annotate(frame, detections)</code></pre>
+
+    <figure style="text-align: center;">
+        <img src="assets/player-detection-1.png" alt="Player Detections" style="width: 650px; height: auto;" class="center-image">
+        <figcaption>Player detections on a soccer pitch.</figcaption>
+    </figure>
+
+    <p>
+        With the player detections in place, we can now apply the homography
+        transformation to align the detected players with the reference frame.
+        First, we must obtain the characterstic points on the actual field. Install
+        the following package to get started:
+    </p>
+
+    <pre><code class="language-shell">pip install -q git+https://github.com/roboflow/sports.git</code></pre>
+
+    <p>
+        Once installed, import the configuration and use the following code to
+        get the characteristic points:
+    </p>
+
+    <pre><code class="language-python">from sports.configs.soccer import SoccerFieldConfiguration
+
+CONFIG = SoccerFieldConfiguration()
+
+result = pitch_detection_model.infer(frame, confidence=0.3)[0]
+keypoints = sv.KeyPoints.from_inference(result)
+
+filter = keypoints.confidence[0] > 0.5
+
+transformer = ViewTransformer(
+    source=keypoints.xy[0][filter].astype(np.float32),
+    target=np.array(CONFIG.vertices)[filter].astype(np.float32)
+)
+
+xy = detections.get_anchors_coordinates(anchor=sv.Position.BOTTOM_CENTER)
+xy = transformer.transform_points(points=xy)</code></pre>
+
+    <figure style="text-align: center;">
+        <img src="assets/player-detection-final.png" alt="Player Detections with Homography" style="width: 650px; height: auto;" class="center-image">
+        <figcaption>Player detections with homography applied.</figcaption>
+    </figure>
+    </section>
+
+    <section id="conclusion">
+        <h2>Conclusion</h2>
+        <p>
+            AI is reshaping soccer in unprecedented ways, transforming how teams
+            prepare, play, and analyze the game. Through this article, we've
+            explored not only the broader implications of AI in soccer but also
+            dived into a hands-on example of detecting players and the ball on
+            the pitch using keypoint detection and homography.
+        </p>
+
+        <p>
+            As AI continues to evolve, its impact on soccer will only grow,
+            offering new opportunities for teams, players, and fans. However,
+            this transformation also comes with the responsibility to address
+            ethical concerns such as data privacy, bias, and fairness. By
+            adhering to ethical principles and leveraging AI responsibly, we can
+            ensure that soccer remains a sport that values integrity, equality,
+            and human dignity.
+        </p>
+
+        <p>
+            AI is not just reshaping how the game is played but also how it is
+            understood, experienced, and appreciated by fans and stakeholders
+            alike. This intersection of technology and sport marks an exciting
+            era for soccer, and it's only the beginning.
+        </p>
+    </section>
+
+    <div class="references-section">
+        <h2>References</h2>
+        <ul class="reference-list">
+            <li class="reference-item" id="ref2">
+                [1] Bauer, P., & Anzer, G. (2021). Data-driven detection of counterpressing in professional football. Data Mining and Knowledge Discovery, 35(5), 2009–2049. <a href="https://doi.org/10.1007/s10618-021-00763-7" target="_blank">https://doi.org/10.1007/s10618-021-00763-7</a>
+            </li>
+            <li class="reference-item" id="ref1">
+                [2] Adams, J. (2018, August 22). Tactical terms. Jadamsftbl. <a href="https://jadamsftbl.wordpress.com/tactical-terms/" target="_blank">https://jadamsftbl.wordpress.com/tactical-terms/</a>
+            </li>
+            <li class="reference-item" id="ref9">
+                [3] Tuyls, K., Omidshafiei, S., Muller, P., Wang, Z., Connor, J., Hennes, D., Graham, I., Spearman, W., Waskett, T., Steele, D., Luc, P., Recasens, A., Galashov, A., Thornton, G., Elie, R., Sprechmann, P., Moreno, P., Cao, K., Garnelo, M., . . . Hassabis, D. (2020, November 18). Game plan: What AI can do for football, and what football can do for AI. arXiv.org. <a href="https://arxiv.org/abs/2011.09192" target="_blank">https://arxiv.org/abs/2011.09192</a>
+            </li>
+            <li class="reference-item" id="ref10">
+                [4] Yeh, R. A., Schwing, A. G., Huang, J., & Murphy, K. (2019). Diverse generation for multi-agent sports games. 2022 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR). <a href="https://doi.org/10.1109/cvpr.2019.00474" target="_blank">https://doi.org/10.1109/cvpr.2019.00474</a>
+            </li>
+            <li class="reference-item" id="ref4">
+                [5] Felfernig, A., Wundara, M., Tran, T. N. T., Le, V., Lubos, S., & Polat-Erdeniz, S. (2024). Sports recommender systems: overview and research directions. Journal of Intelligent Information Systems, 62(4), 1125–1164. <a href="https://doi.org/10.1007/s10844-024-00857-w" target="_blank">https://doi.org/10.1007/s10844-024-00857-w</a>
+            </li>
+            <li class="reference-item" id="ref11">
+                [6] Zone7. (2024, July 8). Zone7 - the human uptime company. <a href="https://zone7.ai/" target="_blank">https://zone7.ai/</a>
+            </li>
+            <li class="reference-item" id="ref3">
+                [7] Delaney, M. (2020, April). How GPS vests are revolutionising the way Premier League players keep fit during coronavirus lockdown. Independent. <a href="https://www.independent.co.uk/sport/football/premier-league/premier-league-training-gps-vests-statsports-coronavirus-lockdown-a9485676.html" target="_blank">https://www.independent.co.uk/sport/football/premier-league/premier-league-training-gps-vests-statsports-coronavirus-lockdown-a9485676.html</a>
+            </li>
+            <li class="reference-item" id="ref5">
+                [8] Gordon, J. (2024, May 21). How AI-powered recruiting helps Spain's leading soccer team score. IBM Blog. <a href="https://www.ibm.com/blog/watsonx-scout-advisor-fc-sevilla/" target="_blank">https://www.ibm.com/blog/watsonx-scout-advisor-fc-sevilla/</a>
+            </li>
+            <li class="reference-item" id="ref8">
+                [9] Sampedro, A. C. (2021). The case of AI in sport: Some ethical concerns at play. <a href="http://diagorasjournal.com/index.php/diagoras/article/view/117" target="_blank">http://diagorasjournal.com/index.php/diagoras/article/view/117</a>
+            </li>
+            <li class="reference-item" id="ref6">
+                [10] Kreiss, S., Bertoni, L., & Alahi, A. (2021, March 3). OpenPIFPAF: Composite fields for semantic keypoint detection and spatio-temporal association. arXiv.org. <a href="https://arxiv.org/abs/2103.02440" target="_blank">https://arxiv.org/abs/2103.02440</a>
+            </li>
+            <li class="reference-item" id="ref7">
+                [11] Mallick, S. (2024, January 10). Homography examples using OpenCV (Python / C++). LearnOpenCV. <a href="https://learnopencv.com/homography-examples-using-opencv-python-c/" target="_blank">https://learnopencv.com/homography-examples-using-opencv-python-c/</a>
+            </li>
+        </ul>
+    </div>
+    
+</main>
+
+<!-- <footer>
+    <p>&copy; 2024 Your Name. All Rights Reserved.</p>
+</footer> -->
+
+</body>
+
+</html>
